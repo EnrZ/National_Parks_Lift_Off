@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 //creates fav_park table when backend runs if it doesn't already exist.
-db.query("CREATE TABLE IF NOT EXISTS fav_park( id MEDIUMINT NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, url VARCHAR(100) NOT NULL,  UNIQUE (name), PRIMARY KEY(id) ) ENGINE = innodb;");
+db.query("CREATE TABLE IF NOT EXISTS fav_park( id MEDIUMINT NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, url VARCHAR(100) NOT NULL,notes VARCHAR(1000),  UNIQUE (name), PRIMARY KEY(id) ) ENGINE = innodb;");
 //db.query("CREATE TABLE IF NOT EXISTS fav_park( id MEDIUMINT NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, UNIQUE (name), PRIMARY KEY(id) ) ENGINE = innodb;");
 
 app.get("/favlist", (req, res) => {
@@ -24,8 +24,8 @@ app.post("/", (req,res) => {
 
     const favParkName = req.body.favParkName;
     const pagePath = req.body.url;
-    const sqlInsert = "INSERT INTO fav_park(name,url) VALUES (?,?)";
-    db.query(sqlInsert, [favParkName,pagePath], (err, result,info) => {
+    const sqlInsert = "INSERT INTO fav_park(name,url,notes) VALUES (?,?,?)";
+    db.query(sqlInsert, [favParkName,pagePath,"no notes currently"], (err, result,info) => {
             
         console.log(err);
         res.send(err);
@@ -43,6 +43,18 @@ db.query(sqlDelete, [favParkName], (err, result) => {
     });
 })
 
+app.put("/update/:parkName", (req, res) => {
+
+    const favParkName = req.params.parkName;
+
+    const notes = req.body.notes;
+    const sqlUpdate = "UPDATE fav_park SET notes = ? WHERE name = ?";
+    db.query(sqlUpdate, [notes, favParkName], (err, result) => {
+        console.log(err);
+    })
+
+
+})
 
 app.get('/parks', (req,res) => {
     const options = {

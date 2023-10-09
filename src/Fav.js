@@ -8,7 +8,9 @@ const listInfo = [];
 
 function Fav() {
     const [parkInfo, getParkInfo] = useState(null);
-    const [favList, setFavList] = useState([]); //initializes useState to empty array 
+    const [favList, setFavList] = useState([]); //initializes useState to empty array
+
+    const [newNotes, setNewNotes] = useState(null);
 
     useEffect(() => {
 
@@ -31,7 +33,13 @@ function Fav() {
 
         window.location.reload();
     };
+    const updateFav = (parkName) => {
+        axios.put(`http://localhost:8000/update/${parkName}`, {notes: newNotes, parkName: parkName});
+
+        window.location.reload();
+    };
     
+
 
     return (<div className="favorite"> 
     <h2><center>Favorites List</center></h2>
@@ -40,7 +48,7 @@ function Fav() {
                 
                 <div key={_index}>
                   
-                            <p value = {fav['name']}><a href={fav['url']}>{fav['name']}</a><button onClick={() => {deleteFav(fav['name']) }}>Delete</button></p> 
+                            <p value = {fav['name']}><a href={fav['url']}>{fav['name']}</a> {fav['notes']} <input type="text" placeholder ="notes go here" onChange={(event)=> {setNewNotes(event.target.value); }} /> <button onClick={() => {updateFav(fav['name']) }}>Update Notes</button><button onClick={() => {deleteFav(fav['name']) }}>Delete</button></p> 
                 </div>))}
       </div>)
 
