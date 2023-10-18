@@ -48,7 +48,7 @@ function Fav() {
                 
                 <div key={_index}>
                   
-                            <p value = {fav['name']}><a href={fav['url']}>{fav['name']}</a> {fav['notes']} <input type="text" placeholder ="notes go here" onChange={(event)=> {setNewNotes(event.target.value); }} /> <button onClick={() => {updateFav(fav['name']) }}>Update Notes</button><button onClick={() => {deleteFav(fav['name']) }}>Delete</button></p> 
+                  <p name = "parkPrint" value = {fav['name']}><a href={fav['url']}>{fav['name']}</a> {fav['notes']} </p> <input type="text" name="notes" placeholder ="notes go here" onChange={(event)=> {setNewNotes(event.target.value); }} /> <button name = "updateButton" onClick={() => {updateFav(fav['name']) }}>Update Notes</button><button name = "deleteButton" onClick={() => {deleteFav(fav['name']) }}>Delete</button>
                 </div>))}
       </div>)
 

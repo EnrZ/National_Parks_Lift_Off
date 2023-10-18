@@ -14,3 +14,16 @@
   justify-content: center;
   font-size: 3rem;
 }
+
+button[name="deleteButton"]{
+  color:red;
+  margin-left:10px;
+}
+
+button[name="updateButton"]{
+  margin-left:10px;
+}
+
+div.favorite{
+  padding: 10px;
+}
